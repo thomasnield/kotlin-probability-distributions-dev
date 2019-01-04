@@ -38,13 +38,12 @@ object BigDecimals {
             retVal = Doubles.sqrt(tmpDoubleArg).asBigDecimal() // initial guess
         }
 
-        // this helps the precision of the square root of BigDecimal?
+        // this iteratively approaches the square root
         generateSequence {
             retVal.multiply(retVal, CONTEXT) -  xScaled
         }.takeWhile { it.signum() != 0 }
         .forEach { tmpShouldBeZero ->
             retVal = retVal.subtract(tmpShouldBeZero.divide(TWO.multiply(retVal), CONTEXT))
-
         }
 
         return retVal
